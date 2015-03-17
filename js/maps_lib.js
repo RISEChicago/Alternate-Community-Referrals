@@ -13,7 +13,7 @@
 
         // Found at https://console.developers.google.com/
         // Important! this key is for demonstration purposes. please register your own.
-        this.googleApiKey = options.googleApiKey || "AIzaSyAq2Fa8KT_MA778MJsvzE7KD9NPU9WbN6c",
+        this.googleApiKey = options.googleApiKey || "AIzaSyB4brGoI__ViNcTUhPQ1wQyojJgZ1uY3HQ",
 
         // name of the location column in your Fusion Table.
         // NOTE: if your location column name has spaces in it, surround it with single quotes
@@ -154,7 +154,7 @@
 
         //-----custom filters-----
 
-        var type_column = "'Label'";  // -- note use of single & double quotes for two-word column header
+        var type_column = "Label";  // -- note use of single & double quotes for two-word column header
         var tempWhereClause = [];
         if ( $("#cbType1").is(':checked')) tempWhereClause.push("RISE");
         if ( $("#cbType2").is(':checked')) tempWhereClause.push("Parks");
