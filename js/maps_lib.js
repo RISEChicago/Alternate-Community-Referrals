@@ -4,37 +4,37 @@
 
         options = options || {};
 
-        this.recordName = options.recordName || "result"; //for showing a count of results
-        this.recordNamePlural = options.recordNamePlural || "results";
-        this.searchRadius = options.searchRadius || 805; //in meters ~ 1/2 mile
+        this.recordName = options.recordName || "Provider"; //for showing a count of results
+        this.recordNamePlural = options.recordNamePlural || "Providers";
+        this.searchRadius = options.searchRadius || 1680; //in meters ~ 1/2 mile
 
         // the encrypted Table ID of your Fusion Table (found under File => About)
-        this.fusionTableId = options.fusionTableId || "",
+        this.fusionTableId = options.fusionTableId || "1kQsl9L5PjzzEoKA_ZztpqyI_bkiLkm8VzemiUKeS",
 
         // Found at https://console.developers.google.com/
         // Important! this key is for demonstration purposes. please register your own.
-        this.googleApiKey = options.googleApiKey || "",
-        
+        this.googleApiKey = options.googleApiKey || "AIzaSyB4brGoI__ViNcTUhPQ1wQyojJgZ1uY3HQ",
+
         // name of the location column in your Fusion Table.
         // NOTE: if your location column name has spaces in it, surround it with single quotes
         // example: locationColumn:     "'my location'",
-        this.locationColumn = options.locationColumn || "geometry";
-        
+        this.locationColumn = options.locationColumn || "Site Address";
+
         // appends to all address searches if not present
         this.locationScope = options.locationScope || "chicago";
 
         // zoom level when map is loaded (bigger is more zoomed in)
-        this.defaultZoom = options.defaultZoom || 11; 
+        this.defaultZoom = options.defaultZoom || 10;
 
         // center that your map defaults to
         this.map_centroid = new google.maps.LatLng(options.map_center[0], options.map_center[1]);
-        
+
         // marker image for your searched address
         this.addrMarkerImage = options.addrMarkerImage || 'images/blue-pushpin.png';
-    
+
     	this.currentPinpoint = null;
     	$("#result_count").html("");
-        
+
         this.myOptions = {
             zoom: this.defaultZoom,
             center: this.map_centroid,
@@ -42,7 +42,7 @@
         };
         this.geocoder = new google.maps.Geocoder();
         this.map = new google.maps.Map($("#map_canvas")[0], this.myOptions);
-        
+
         // maintains map centerpoint for responsive design
         google.maps.event.addDomListener(self.map, 'idle', function () {
             self.calculateCenter();
@@ -55,11 +55,11 @@
         //reset filters
         $("#search_address").val(self.convertToPlainString($.address.parameter('address')));
         var loadRadius = self.convertToPlainString($.address.parameter('radius'));
-        if (loadRadius != "") 
+        if (loadRadius != "")
             $("#search_radius").val(loadRadius);
-        else 
+        else
             $("#search_radius").val(self.searchRadius);
-        
+
         $(":checkbox").prop("checked", "checked");
         $("#result_box").hide();
 
@@ -151,8 +151,21 @@
         var address = $("#search_address").val();
         self.searchRadius = $("#search_radius").val();
         self.whereClause = self.locationColumn + " not equal to ''";
-        
+
         //-----custom filters-----
+
+        var type_column = "'Legend'";  // -- note use of single & double quotes for two-word column header
+        var tempWhereClause = [];
+        if ( $("#cbType1").is(':checked')) tempWhereClause.push("RISE");
+        if ( $("#cbType2").is(':checked')) tempWhereClause.push("Parks");
+        if ( $("#cbType3").is(':checked')) tempWhereClause.push("BHS/IYS");
+        if ( $("#cbType4").is(':checked')) tempWhereClause.push("Mentoring/Other");
+        if ( $("#cbType5").is(':checked')) tempWhereClause.push("OST");
+        self.whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
+
+        if ( $("#select_type").val() != "")
+          whereClause += " AND 'Police District' = '" + $("#select_type").val() + "'";
+
         //-----end of custom filters-----
 
         self.getgeoCondition(address, function (geoCondition) {
@@ -274,7 +287,7 @@
 
     MapsLib.prototype.displaySearchCount = function (json) {
         var self = this;
-        
+
         var numRows = 0;
         if (json["rows"] != null) {
             numRows = json["rows"][0];
@@ -315,11 +328,11 @@
 
     MapsLib.prototype.clearSearch = function () {
         var self = this;
-        if (self.searchrecords && self.searchrecords.getMap) 
+        if (self.searchrecords && self.searchrecords.getMap)
             self.searchrecords.setMap(null);
-        if (self.addrMarker && self.addrMarker.getMap) 
+        if (self.addrMarker && self.addrMarker.getMap)
             self.addrMarker.setMap(null);
-        if (self.searchRadiusCircle && self.searchRadiusCircle.getMap) 
+        if (self.searchRadiusCircle && self.searchRadiusCircle.getMap)
             self.searchRadiusCircle.setMap(null);
     };
 
