@@ -6,7 +6,7 @@
 
         this.recordName = options.recordName || "Provider"; //for showing a count of results
         this.recordNamePlural = options.recordNamePlural || "Providers";
-        this.searchRadius = options.searchRadius || 1680; //in meters ~ 1/2 mile
+        this.searchRadius = options.searchRadius || 1610; //in meters ~ 1/2 mile
 
         // the encrypted Table ID of your Fusion Table (found under File => About)
         this.fusionTableId = options.fusionTableId || "1kQsl9L5PjzzEoKA_ZztpqyI_bkiLkm8VzemiUKeS",
@@ -154,7 +154,7 @@
 
         //-----custom filters-----
 
-        var type_column = "'Legend'";  // -- note use of single & double quotes for two-word column header
+        var type_column = "'type'";  // -- note use of single & double quotes for two-word column header
         var tempWhereClause = [];
         if ( $("#cbType1").is(':checked')) tempWhereClause.push("RISE");
         if ( $("#cbType2").is(':checked')) tempWhereClause.push("Parks");
