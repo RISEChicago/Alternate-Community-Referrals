@@ -154,7 +154,7 @@
 
         //-----custom filters-----
 
-        var type_column = "Legend";  // -- note use of single & double quotes for two-word column header
+        var type_column = "'Legend'";  // -- note use of single & double quotes for two-word column header
         var tempWhereClause = [];
         if ( $("#cbType1").is(':checked')) tempWhereClause.push("RISE");
         if ( $("#cbType2").is(':checked')) tempWhereClause.push("Parks");
