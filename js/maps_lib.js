@@ -164,7 +164,7 @@
         self.whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
 
         if ( $("#select_type").val() != "")
-          whereClause += " AND 'Police District' = '" + $("#select_type").val() + "'";
+      self.whereClause += " AND 'Police District' = '" + $("#select_type").val() + "'";
 
         //-----end of custom filters-----
 
