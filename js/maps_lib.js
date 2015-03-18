@@ -154,14 +154,14 @@
 
         //-----custom filters-----
 
-        var type_column = "Label";  // -- note use of single & double quotes for two-word column header
+        var type_column = "Legend";  // -- note use of single & double quotes for two-word column header
         var tempWhereClause = [];
         if ( $("#cbType1").is(':checked')) tempWhereClause.push("RISE");
         if ( $("#cbType2").is(':checked')) tempWhereClause.push("Parks");
         if ( $("#cbType3").is(':checked')) tempWhereClause.push("BHS/IYS");
         if ( $("#cbType4").is(':checked')) tempWhereClause.push("Mentoring/Other");
         if ( $("#cbType5").is(':checked')) tempWhereClause.push("OST");
-        whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
+        self.whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
 
         if ( $("#select_type").val() != "")
           whereClause += " AND 'Police District' = '" + $("#select_type").val() + "'";
